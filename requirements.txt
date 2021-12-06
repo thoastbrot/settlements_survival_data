@@ -1,0 +1,4 @@
+requests
+dataclasses-json
+beautifulsoup4
+lxml
