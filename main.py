@@ -6,10 +6,12 @@ import bs4
 from dataclasses_json import DataClassJsonMixin
 from typing_inspect import get_origin, get_args
 
-from model import (
-    LangConfig, LocalizedString, Item, Building, Technology, SingleValues, TechnologyModule, TonwBuilding, Seed,
-    ResourceAttributes
-)
+from model.buildings import TonwBuilding, Building
+from model.common import SingleValues, LocalizedString
+from model.items import ItemType, Item
+from model.language import LangConfig
+from model.resources import ResourceAttributes, Seed
+from model.tech import Technology, TechnologyModule
 
 # a little ugly, used as global lookup table
 language_dict = {}
@@ -71,6 +73,11 @@ def main():
             "path": f"{game_files}/Items.xml",
             "class": Item,
             "element_name": "ItemsConfig"
+        },
+        "itemtypes": {
+            "path": f"{game_files}/ItemType.xml",
+            "class": ItemType,
+            "element_name": "ItemTypeConfig"
         },
         "buildings": {
             "path": f"{game_files}/Building.xml",

@@ -4,7 +4,10 @@ from collections import defaultdict
 from string import Template
 from typing import Optional, List, Dict
 
-from model import Building, ConsumeAddAbility, Technology, TechnologyModule, Seed, ResourceAttributes, Item
+from model.buildings import ConsumeAddAbility, Building
+from model.items import Item
+from model.resources import Seed, ResourceAttributes
+from model.tech import TechnologyModule, Technology
 
 tpl = Template("""
 ===${Name}===
@@ -83,7 +86,7 @@ def get_tech_module(tech_module_id: int) -> Optional[TechnologyModule]:
         return TechnologyModule.from_dict(tech_module)
 
 
-def get_building_category(building_id: int) -> Optional[str]:
+def get_building_category(building_id: int) -> str:
     for t in commonset_townbuildings:
         if building_id in t.get("BuildingID"):
             return t.get("Name")
