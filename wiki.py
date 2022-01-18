@@ -357,10 +357,10 @@ def generate_items():
 
             for sub_itemtype_name, item_list in firstlevel.items():
 
-                wiki_items.write("|+\n")
+                wiki_items.write("|-\n")
                 if sub_itemtype_name != "...":
                     wiki_items.write(f"! colspan={len(columns)} | {sub_itemtype_name} \n")
-                    wiki_items.write("|+\n")
+                    wiki_items.write("|-\n")
 
                 for item in item_list:
                     # not in the game
@@ -374,10 +374,10 @@ def generate_items():
                         row = [item.ID, icon, item.Name, item.Worth, item.OrderWorth, prepare_description(item.Des)]
                     wiki_items.write(
                         f"| {'||'.join(map(str, row))}\n")
-                    wiki_items.write("|+\n")
+                    wiki_items.write("|-\n")
             wiki_items.write("|}\n")
 
 
 if __name__ == '__main__':
     generate_items()
-    # generate_buildings()
+    generate_buildings()
