@@ -6,10 +6,12 @@ import bs4
 from dataclasses_json import DataClassJsonMixin
 from typing_inspect import get_origin, get_args
 
-from model import (
-    LangConfig, LocalizedString, Item, Building, Technology, SingleValues, TechnologyModule, TonwBuilding, Seed,
-    ResourceAttributes
-)
+from model.buildings import TonwBuilding, Building, LogBuilding
+from model.common import SingleValues, LocalizedString
+from model.items import ItemType, Item
+from model.language import LangConfig
+from model.resources import ResourceAttributes, Seed, Animal
+from model.tech import Technology, TechnologyModule
 
 # a little ugly, used as global lookup table
 language_dict = {}
@@ -72,6 +74,11 @@ def main():
             "class": Item,
             "element_name": "ItemsConfig"
         },
+        "itemtypes": {
+            "path": f"{game_files}/ItemType.xml",
+            "class": ItemType,
+            "element_name": "ItemTypeConfig"
+        },
         "buildings": {
             "path": f"{game_files}/Building.xml",
             "class": Building,
@@ -92,6 +99,11 @@ def main():
             "class": TonwBuilding,
             "element_name": "TonwBuilding"
         },
+        "commonset_logbuildings": {
+            "path": f"{game_files}/CommonSet.xml",
+            "class": LogBuilding,
+            "element_name": "LogBuilding"
+        },
         "seeds": {
             "path": f"{game_files}/ResSeed.xml",
             "class": Seed,
@@ -101,6 +113,11 @@ def main():
             "path": f"{game_files}/ResAttribute.xml",
             "class": ResourceAttributes,
             "element_name": "ResAttributeConfig"
+        },
+        "animals": {
+            "path": f"{game_files}/Animal.xml",
+            "class": Animal,
+            "element_name": "AnimalConfig"
         },
     }
 
@@ -115,6 +132,7 @@ def main():
             data_dictionary[thing_name].append(build_object(b_, thing["class"]))
 
         with open(f"./out/{thing_name}.json", "w") as fd:
+            print(thing_name)
             if thing_name == "lang":
                 language_dict = {obj.ID: obj.get_by_language(language)[0].LangValue for obj in
                                  data_dictionary[thing_name]}
