@@ -19,6 +19,10 @@ class Range:
     Lower: int
     Upper: int
 
+    def avg(self) -> float:
+        avg = (self.Upper + self.Lower)/2
+        return round(avg) if round(avg) == avg else avg
+
     def __str__(self):
         if self.Lower == self.Upper:
             return str(self.Lower)

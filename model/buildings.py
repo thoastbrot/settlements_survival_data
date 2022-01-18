@@ -31,6 +31,7 @@ class ConsumeAddAbility:
     ProduceType: List[Goods]
     SeedId: int
     UnlockTech: int
+    WorkRequired: int
 
 
 @dataclass_json
@@ -61,9 +62,8 @@ class ResStorageNum:
 
 @dataclass_json
 @dataclass
-class WorkerRange:
-    Lower: int
-    Upper: int
+class WorkerRange(Range):
+    ...
 
 
 @dataclass_json
@@ -105,9 +105,15 @@ class FixedSize:
         return [len(rows), len(rows[0].split(","))]
 
 
-@dataclass_json
-@dataclass
+class TypeStorage(SingleValues):
+    values: int
+
+
 class Upgrade(SingleValues):
+    values: int
+
+
+class CanKeepAnimal(SingleValues):
     values: int
 
 
@@ -144,7 +150,9 @@ class Building:
     # 6 is mountain or plain ground.
     FixedSize: Optional[FixedSize]
     DragSize: Optional[DragSize]
-    UpgradeList: List[Upgrade]
+    UpgradeList: Upgrade
+    TypeStorageList: TypeStorage
+    CanKeepAnimalList: CanKeepAnimal
 
     # Feature Type Enumeration from the xml docs
     @property
@@ -202,5 +210,13 @@ class TonwBuilding:
 
 @dataclass_json
 @dataclass
+class LogBuilding:
+    Name: LocalizedString
+    BuildingID: List[int]
+
+
+@dataclass_json
+@dataclass
 class CommonSet:
     TonwBuildingList: List[TonwBuilding]
+    LogBuildingList: List[LogBuilding]

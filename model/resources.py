@@ -22,46 +22,10 @@ class TemperatureRange:
 
 @dataclass_json
 @dataclass
-class DeadRange(Range):
-    ...
-
-
-@dataclass_json
-@dataclass
-class NumRange(Range):
-    ...
-
-
-@dataclass_json
-@dataclass
-class UnEducatedNumRange(Range):
-    ...
-
-
-@dataclass_json
-@dataclass
-class FruitGrowTmc(TemperatureRange):
-    ...
-
-
-@dataclass_json
-@dataclass
-class GrowTmc(TemperatureRange):
-    ...
-
-
-@dataclass_json
-@dataclass
-class DeadTmc(TemperatureRange):
-    ...
-
-
-@dataclass_json
-@dataclass
 class FinishRes:
     ID: int
-    NumRange: Optional[NumRange]
-    UnEducatedNumRange: Optional[UnEducatedNumRange]
+    NumRange: Optional[Range]
+    UnEducatedNumRange: Optional[Range]
     RandomRange: int
     UnlockTech: int
     Rate: int
@@ -73,7 +37,7 @@ class LifeCircle:
     MinSize: float
     MaxSize: float
     Grow: int
-    DeadRange: Optional[DeadRange]
+    DeadRange: Optional[Range]
 
 
 @dataclass_json
@@ -95,13 +59,13 @@ class ResourceAttributes:
     # See IDs in the citizenaction
     FruitID: int
     RipeDays: int
-    NumRange: Optional[NumRange]
+    NumRange: Optional[Range]
     # Temperature Range for Fruit Output (F)
-    FruitGrowTmc: Optional[FruitGrowTmc]
+    FruitGrowTmc: Optional[TemperatureRange]
     # Temperature Range for Survival (F)
-    DeadTmc: Optional[DeadTmc]
+    DeadTmc: Optional[TemperatureRange]
     # Temperature Range for Growth (F)
-    GrowTmc: Optional[GrowTmc]
+    GrowTmc: Optional[TemperatureRange]
 
     @property
     def EntityTypeName(self) -> str:
@@ -136,3 +100,29 @@ class Seed:
     Offset: float
     Worth: int
     SellValue: int
+
+
+@dataclass_json
+@dataclass
+class Produce:
+    ID: int
+    NumRange: Optional[Range]
+
+
+@dataclass_json
+@dataclass
+class Animal:
+    ID: int
+    Name: LocalizedString
+    Des: LocalizedString
+    Icon: str
+    OutputPath: LocalizedString
+    ResID: int
+    ProduceList: List[Produce]
+    # WorkRequired not understood yet
+    StartAnimalNum: Optional[Range]
+    AnimalBornAgeRange: Optional[Range]
+    NeedFodder: int
+    FodderAddAge: int
+    Worth: int
+    SellVaue: Optional[Range]
